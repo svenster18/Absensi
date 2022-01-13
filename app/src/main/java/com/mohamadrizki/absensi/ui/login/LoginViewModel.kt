@@ -1,5 +1,6 @@
 package com.mohamadrizki.absensi.ui.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+
+    val isLoggedin = loginRepository.isLoggedIn
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job

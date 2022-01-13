@@ -13,10 +13,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.MainActivity
 import com.mohamadrizki.absensi.databinding.ActivityLoginBinding
 
 import com.mohamadrizki.absensi.R
+import com.mohamadrizki.absensi.UserPreference
+import com.mohamadrizki.absensi.data.model.LoggedInUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -36,6 +39,14 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
+
+        val isLoggedin = loginViewModel.isLoggedin
+
+        if (isLoggedin) {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer

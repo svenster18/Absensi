@@ -1,6 +1,10 @@
 package com.mohamadrizki.absensi.data
 
+import android.util.Log
+import com.mohamadrizki.absensi.App
+import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.data.model.LoggedInUser
+import kotlin.math.log
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -8,6 +12,8 @@ import com.mohamadrizki.absensi.data.model.LoggedInUser
  */
 
 class LoginRepository(val dataSource: LoginDataSource) {
+
+    val userPreference = UserPreference(App.applicationContext())
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -19,8 +25,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     init {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        user = null
-
+        if (userPreference.getUser().isLoggedIn) user = userPreference.getUser()
     }
 
     fun logout() {
@@ -43,6 +48,6 @@ class LoginRepository(val dataSource: LoginDataSource) {
         this.user = loggedInUser
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-
+        userPreference.setUser(loggedInUser)
     }
 }

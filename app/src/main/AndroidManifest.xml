@@ -19,6 +19,7 @@
         android:maxSdkVersion="18" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,8 +29,7 @@
         android:theme="@style/Theme.Absensi">
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
