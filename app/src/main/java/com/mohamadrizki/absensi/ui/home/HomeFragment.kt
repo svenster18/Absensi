@@ -32,7 +32,6 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.R
-import com.mohamadrizki.absensi.TambahAbsensiActivity
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.databinding.FragmentHomeBinding
 import java.io.File
@@ -108,7 +107,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == TambahAbsensiActivity.REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
             setPic()
         }
     }
@@ -177,8 +176,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val name = user.displayName?.replace(" ", "")?.toLowerCase()
         return File.createTempFile(
-            "${user.displayName}_${timeStamp}_", /* prefix */
+            "${name}_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {

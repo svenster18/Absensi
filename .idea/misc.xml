@@ -7,7 +7,9 @@
         <entry key="..\:/Project/Absensi/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Project/Absensi/app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="..\:/Project/Absensi/app/src/main/res/layout/activity_tambah_absensi.xml" value="0.209375" />
-        <entry key="..\:/Project/Absensi/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
+        <entry key="..\:/Project/Absensi/app/src/main/res/layout/fragment_dashboard.xml" value="0.18" />
+        <entry key="..\:/Project/Absensi/app/src/main/res/layout/fragment_home.xml" value="0.10434782608695652" />
+        <entry key="..\:/Project/Absensi/app/src/main/res/layout/item_row_absensi.xml" value="0.209375" />
       </map>
     </option>
   </component>

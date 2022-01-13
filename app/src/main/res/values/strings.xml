@@ -16,4 +16,47 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="strip">-</string>
+    <string name="jam_masuk">Jam Masuk</string>
+    <string name="jam_keluar">Jam Keluar</string>
+    <string name="tanggal">Tanggal</string>
+
+    <string-array name="data_tanggal">
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+        <item>14 Januari 2022</item>
+    </string-array>
+
+    <string-array name="data_jam_masuk">
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+        <item>08:00</item>
+    </string-array>
+
+    <string-array name="data_jam_keluar">
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+        <item>16:00</item>
+    </string-array>
 </resources>
