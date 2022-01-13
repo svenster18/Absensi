@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.location.Location
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -24,16 +23,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
-import com.mohamadrizki.absensi.databinding.ActivityMainBinding
+import com.mohamadrizki.absensi.databinding.ActivityTambahAbsensiBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var locationManager: LocationManager
-    private lateinit var binding: ActivityMainBinding
+class TambahAbsensiActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var binding: ActivityTambahAbsensiBinding
     private lateinit var currentPhotoPath: String
     private var locationPermissionGranted = false
     private var map: GoogleMap? = null
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityTambahAbsensiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Construct a PlacesClient

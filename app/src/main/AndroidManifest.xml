@@ -59,7 +59,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".TambahAbsensiActivity"
             android:exported="true" />
     </application>
 

@@ -13,13 +13,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.mohamadrizki.absensi.App
-import com.mohamadrizki.absensi.MainActivity
+import com.mohamadrizki.absensi.TambahAbsensiActivity
 import com.mohamadrizki.absensi.databinding.ActivityLoginBinding
 
 import com.mohamadrizki.absensi.R
-import com.mohamadrizki.absensi.UserPreference
-import com.mohamadrizki.absensi.data.model.LoggedInUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -43,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         val isLoggedin = loginViewModel.isLoggedin
 
         if (isLoggedin) {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val intent = Intent(this@LoginActivity, TambahAbsensiActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -120,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
             "$welcome $displayName",
             Toast.LENGTH_LONG
         ).show()
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        val intent = Intent(this@LoginActivity, TambahAbsensiActivity::class.java)
         startActivity(intent)
     }
 
