@@ -17,6 +17,7 @@ import com.mohamadrizki.absensi.MainActivity
 import com.mohamadrizki.absensi.databinding.ActivityLoginBinding
 
 import com.mohamadrizki.absensi.R
+import com.mohamadrizki.absensi.data.model.LoggedInUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -67,7 +68,9 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
+                loginResult.success.observe(this@LoginActivity, Observer {
+                    updateUiWithUser(it)
+                })
             }
             setResult(Activity.RESULT_OK)
 
@@ -108,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
+    private fun updateUiWithUser(model: LoggedInUser) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
         // TODO : initiate successful logged in experience

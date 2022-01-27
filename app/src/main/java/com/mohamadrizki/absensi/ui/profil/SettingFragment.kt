@@ -1,13 +1,11 @@
-package com.mohamadrizki.absensi.ui.notifications
+package com.mohamadrizki.absensi.ui.profil
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import com.mohamadrizki.absensi.R
-import com.mohamadrizki.absensi.databinding.FragmentHomeBinding
 import com.mohamadrizki.absensi.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {

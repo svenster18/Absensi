@@ -1,4 +1,4 @@
-package com.mohamadrizki.absensi.ui.home
+package com.mohamadrizki.absensi.ui.tambah_absensi
 
 import android.Manifest
 import android.content.Intent
@@ -176,7 +176,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val name = user.displayName?.replace(" ", "")?.toLowerCase()
+        val name = user.displayName?.replace(" ", "")?.lowercase()
         return File.createTempFile(
             "${name}_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */

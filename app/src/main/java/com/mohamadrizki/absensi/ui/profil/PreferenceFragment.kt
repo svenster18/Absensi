@@ -1,19 +1,13 @@
-package com.mohamadrizki.absensi.ui.notifications
+package com.mohamadrizki.absensi.ui.profil
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.UserPreference
+import com.mohamadrizki.absensi.data.model.LoggedInUser
 
 class PreferenceFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -56,6 +50,9 @@ class PreferenceFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (key == NAME) {
             namePreference.summary = sharedPreferences.getString(NAME, DEFAULT_VALUE)
+            val user = userPreference.getUser()
+            val name = sharedPreferences.getString(NAME, DEFAULT_VALUE)
+            userPreference.setUser(LoggedInUser(user.userId, name, user.isLoggedIn))
         }
     }
 }

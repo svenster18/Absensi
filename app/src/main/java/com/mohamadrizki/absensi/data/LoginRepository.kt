@@ -1,6 +1,7 @@
 package com.mohamadrizki.absensi.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.data.model.LoggedInUser
@@ -33,12 +34,12 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(username: String, password: String): Result<LiveData<LoggedInUser>> {
         // handle login
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
-            setLoggedInUser(result.data)
+            setLoggedInUser(userPreference.getUser())
         }
 
         return result
@@ -46,8 +47,5 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        userPreference.setUser(loggedInUser)
     }
 }

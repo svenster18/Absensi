@@ -1,4 +1,4 @@
-package com.mohamadrizki.absensi.ui.dashboard
+package com.mohamadrizki.absensi.ui.lihat_absensi
 
 import android.view.LayoutInflater
 import android.view.View

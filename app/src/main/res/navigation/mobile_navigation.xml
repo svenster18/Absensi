@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.mohamadrizki.absensi.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:name="com.mohamadrizki.absensi.ui.tambah_absensi.HomeFragment"
+        android:label="@string/title_add_absence"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.mohamadrizki.absensi.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:name="com.mohamadrizki.absensi.ui.lihat_absensi.DashboardFragment"
+        android:label="@string/title_view_absence"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_lihat_gaji"
+        android:name="com.mohamadrizki.absensi.ui.lihat_gaji.LihatGajiFragment"
+        android:label="@string/title_view_salary"
+        tools:layout="@layout/fragment_lihat_gaji" />
+
+    <fragment
         android:id="@+id/navigation_setting"
-        android:name="com.mohamadrizki.absensi.ui.notifications.SettingFragment"
+        android:name="com.mohamadrizki.absensi.ui.profil.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 

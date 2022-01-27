@@ -1,9 +1,16 @@
 package com.mohamadrizki.absensi.data
 
+import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.data.model.LoggedInUser
+import com.mohamadrizki.absensi.data.model.UserResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 
 /**
@@ -13,13 +20,31 @@ class LoginDataSource {
 
     val userPreference = UserPreference(App.applicationContext())
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        try {
+    fun login(username: String, password: String): Result<LiveData<LoggedInUser>> {
+        return try {
             // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Mohamad Rizki", true)
-            return Result.Success(fakeUser)
+            val user = MutableLiveData<LoggedInUser>()
+            val client = ApiConfig.getApiService().login(username, password)
+            client.enqueue(object : Callback<UserResponse> {
+                override fun onResponse(
+                    call: Call<UserResponse>,
+                    response: Response<UserResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val userResponse = response.body()?.data
+                        val loggedInUser = LoggedInUser(userResponse?.username, userResponse?.nama, true)
+                        userPreference.setUser(loggedInUser)
+                        user.value = loggedInUser
+                    }
+                }
+
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    Log.e(TAG, "onFailure: ${t.message.toString()}")
+                }
+            })
+            Result.Success(user)
         } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
+            Result.Error(IOException("Error logging in", e))
         }
     }
 
@@ -29,7 +54,6 @@ class LoginDataSource {
     }
 
     companion object {
-        const val USERNAME = "jane@email.com"
-        const val PASSWORD = "123456"
+        const val TAG = "LoginDataSource"
     }
 }
