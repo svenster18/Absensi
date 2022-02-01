@@ -1,5 +1,6 @@
 package com.mohamadrizki.absensi.ui.lihat_absensi
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,12 @@ import com.mohamadrizki.absensi.data.model.Absensi
 import com.mohamadrizki.absensi.data.model.AbsensiItem
 
 class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerView.Adapter<ListAbsensiAdapter.ListViewHolder>() {
+    private lateinit var onItemClickCallBack: OnItemClickCallBack
+
+    fun setOnItemClickCallback(onItemClickCallBack: OnItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_row_absensi, parent, false)
         return ListViewHolder(view)
@@ -22,6 +29,8 @@ class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerVi
         holder.tvTanggal.text = tanggal
         holder.tvJamMasuk.text = jammasuk
         holder.tvJamKeluar.text = jamkeluar
+
+        holder.itemView.setOnClickListener { onItemClickCallBack.onItemClicked(listAbsensi[holder.adapterPosition]) }
     }
 
     override fun getItemCount(): Int = listAbsensi.size
@@ -30,5 +39,9 @@ class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerVi
         var tvTanggal: TextView = itemView.findViewById(R.id.tv_item_tanggal)
         var tvJamMasuk: TextView = itemView.findViewById(R.id.tv_item_jam_masuk)
         var tvJamKeluar: TextView = itemView.findViewById(R.id.tv_item_jam_keluar)
+    }
+
+    interface OnItemClickCallBack {
+        fun onItemClicked(data: AbsensiItem)
     }
 }

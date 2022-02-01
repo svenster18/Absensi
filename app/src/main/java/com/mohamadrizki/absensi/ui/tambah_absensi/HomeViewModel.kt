@@ -23,8 +23,8 @@ class HomeViewModel : ViewModel() {
 
     val jam = Date().time.hours.inWholeHours
 
-    private val _absenSukses = MutableLiveData(false)
-    val absenSukses: LiveData<Boolean> = _absenSukses
+    private val _toastString = MutableLiveData<String>()
+    val toastString: LiveData<String> = _toastString
 
     private val userPreference = UserPreference(App.applicationContext())
 
@@ -54,18 +54,23 @@ class HomeViewModel : ViewModel() {
 
     fun absen() {
         val nipPart = RequestBody.create("text/plain".toMediaTypeOrNull(), nip!!)
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val tanggal = RequestBody.create("text/plain".toMediaTypeOrNull(), sdf.format(Date()))
         val filePart = MultipartBody.Part.createFormData("foto_masuk", photoFile?.name, RequestBody.create(
             "image/*".toMediaTypeOrNull(), photoFile!!))
         val latitudePart = RequestBody.create("text/plain".toMediaTypeOrNull(), location?.latitude.toString())
         val longitudePart = RequestBody.create("text/plain".toMediaTypeOrNull(), location?.longitude.toString())
-        val client = ApiConfig.getApiService().tambahAbsensi(nipPart, filePart, latitudePart, longitudePart)
+        val client = ApiConfig.getApiService().tambahAbsensi(nipPart, tanggal, filePart, latitudePart, longitudePart)
         client.enqueue(object: Callback<PostAbsensiResponse> {
             override fun onResponse(
                 call: Call<PostAbsensiResponse>,
                 response: Response<PostAbsensiResponse>
             ) {
                 if (response.isSuccessful) {
-                    _absenSukses.value = true
+                    _toastString.value = response.body()?.messages?.success!!
+                }
+                else {
+                    _toastString.value = "Sudah Absen"
                 }
             }
 
@@ -93,7 +98,10 @@ class HomeViewModel : ViewModel() {
                 response: Response<PostAbsensiResponse>
             ) {
                 if (response.isSuccessful) {
-                    _absenSukses.value = true
+                    _toastString.value = response.body()?.messages?.success!!
+                }
+                else {
+                    _toastString.value = "Sudah Absen"
                 }
             }
 

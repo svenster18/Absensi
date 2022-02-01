@@ -90,8 +90,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         homeViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             HomeViewModel::class.java)
 
-        if (homeViewModel.jam > 16) {
+        if (homeViewModel.jam >= 16 && homeViewModel.jam <= 17) {
             binding.btnKirim.text = "Absen Keluar"
+            binding.btnKirim.isEnabled = true
+            binding.btnAmbil.isEnabled = true
+
+        }
+        else if (homeViewModel.jam >=7 && homeViewModel.jam <=9){
+            binding.btnKirim.text = "Absen Masuk"
+            binding.btnKirim.isEnabled = true
+            binding.btnAmbil.isEnabled = true
         }
 
         lastLocation = homeViewModel.getLatLng()
@@ -136,8 +144,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             else {
                 homeViewModel.absen()
             }
-            homeViewModel.absenSukses.observe(requireActivity(), { sukses ->
-                Toast.makeText(context, "Absen Berhasil", Toast.LENGTH_SHORT).show()
+            homeViewModel.toastString.observe(requireActivity(), { toastString ->
+                Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
             })
         }
     }

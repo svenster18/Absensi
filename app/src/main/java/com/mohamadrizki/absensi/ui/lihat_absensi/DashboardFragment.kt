@@ -1,5 +1,6 @@
 package com.mohamadrizki.absensi.ui.lihat_absensi
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,18 @@ class DashboardFragment : Fragment() {
         binding.rvAbsensi.layoutManager = LinearLayoutManager(activity)
         val listAbsensiAdapter = ListAbsensiAdapter(absensi)
         binding.rvAbsensi.adapter = listAbsensiAdapter
+
+        listAbsensiAdapter.setOnItemClickCallback(object : ListAbsensiAdapter.OnItemClickCallBack {
+            override fun onItemClicked(data: AbsensiItem) {
+                showSelectedAbsensi(data)
+            }
+        })
+    }
+
+    private fun showSelectedAbsensi(data: AbsensiItem) {
+        val intent = Intent(context, DetailAbsensiActivity::class.java)
+        intent.putExtra(DetailAbsensiActivity.EXTRA_ABSENSI, data)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

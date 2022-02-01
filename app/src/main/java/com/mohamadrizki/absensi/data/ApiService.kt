@@ -20,6 +20,7 @@ interface ApiService {
     @POST("absensi")
     fun tambahAbsensi(
         @Part("NIP") NIP: RequestBody,
+        @Part("tanggal") tanggal: RequestBody,
         @Part fotomasuk: MultipartBody.Part,
         @Part("latitude_masuk") latitudemasuk: RequestBody,
         @Part("longitude_masuk") longitudemasuk: RequestBody
