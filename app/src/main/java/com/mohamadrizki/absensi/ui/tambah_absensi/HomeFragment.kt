@@ -15,11 +15,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,6 +36,7 @@ import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.databinding.FragmentHomeBinding
+import com.mohamadrizki.absensi.ui.lihat_absensi.DashboardViewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -49,15 +52,20 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var currentPhotoPath: String
     private var locationPermissionGranted = false
     private var map: GoogleMap? = null
 
+    private var photoFile: File? = null
+
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var lastKnownLocation: Location? = null
+
+    private var lastLocation: LatLng? = null
 
     // The entry point to the Places API.
     private lateinit var placesClient: PlacesClient
@@ -78,6 +86,23 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        homeViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            HomeViewModel::class.java)
+
+        if (homeViewModel.jam > 16) {
+            binding.btnKirim.text = "Absen Keluar"
+        }
+
+        lastLocation = homeViewModel.getLatLng()
+
+        currentPhotoPath = homeViewModel.getCurrentPhotoPath()
+
+        //if (!currentPhotoPath.equals("")) {
+        //    setPic()
+        //}
+        photoFile = homeViewModel.getPhoto()
+
 
         // Construct a PlacesClient
         Places.initialize(App.applicationContext(), getString(R.string.google_maps_key))
@@ -103,11 +128,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             mapFragment?.getMapAsync(this)
 
         }
+
+        binding.btnKirim.setOnClickListener {
+            if (homeViewModel.jam > 16) {
+                homeViewModel.absenKeluar()
+            }
+            else {
+                homeViewModel.absen()
+            }
+            homeViewModel.absenSukses.observe(requireActivity(), { sukses ->
+                Toast.makeText(context, "Absen Berhasil", Toast.LENGTH_SHORT).show()
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
+            photoFile = homeViewModel.getPhoto()
             setPic()
         }
     }
@@ -148,7 +186,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 // Create the File where the photo should go
-                val photoFile: File? = try {
+                photoFile = try {
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
@@ -166,6 +204,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     context?.grantUriPermission(activity?.packageName, photoURI, flags)
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
+                homeViewModel.setPhoto(photoFile!!)
             }
         }
     }
@@ -184,6 +223,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
+            homeViewModel.setCurrentPhotoPath(currentPhotoPath)
         }
     }
 
@@ -268,14 +308,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
+                            homeViewModel.setLatLng(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
+                            lastLocation = homeViewModel.getLatLng()
                             map?.addMarker(
-                                MarkerOptions().position(LatLng(lastKnownLocation!!.latitude,
-                                    lastKnownLocation!!.longitude)).title("Lokasi Pegawai")
+                                MarkerOptions().position(lastLocation!!).title("Lokasi Pegawai")
                             )
                             map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation!!.latitude,
-                                    lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
+                                lastLocation!!, DEFAULT_ZOOM.toFloat()))
                         }
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.")

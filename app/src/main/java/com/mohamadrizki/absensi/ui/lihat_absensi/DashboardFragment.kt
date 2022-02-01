@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.data.model.Absensi
+import com.mohamadrizki.absensi.data.model.AbsensiItem
 import com.mohamadrizki.absensi.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -33,10 +35,20 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val dashboardViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DashboardViewModel::class.java)
+        dashboardViewModel.listAbsensi.observe(requireActivity(), { absensi ->
+            setAbsensiData(absensi)
+        })
+
         binding.rvAbsensi.setHasFixedSize(true)
 
         list.addAll(listAbsensi)
-        showRecyclerList()
+    }
+
+    private fun setAbsensiData(absensi: List<AbsensiItem>) {
+        binding.rvAbsensi.layoutManager = LinearLayoutManager(activity)
+        val listAbsensiAdapter = ListAbsensiAdapter(absensi)
+        binding.rvAbsensi.adapter = listAbsensiAdapter
     }
 
     override fun onDestroyView() {
@@ -56,10 +68,4 @@ class DashboardFragment : Fragment() {
             }
             return listAbsensi
         }
-
-    private fun showRecyclerList() {
-        binding.rvAbsensi.layoutManager = LinearLayoutManager(activity)
-        val listAbsensiAdapter = ListAbsensiAdapter(list)
-        binding.rvAbsensi.adapter = listAbsensiAdapter
-    }
 }

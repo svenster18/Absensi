@@ -8,7 +8,10 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class LoggedInUser(
-    var userId: String? = null,
+    var nip: String? = null,
+    var username: String? = null,
     var displayName: String? = null,
+    var no_telp: String? = null,
+    var jabatan: String? = null,
     var isLoggedIn: Boolean = false
 ) : Parcelable

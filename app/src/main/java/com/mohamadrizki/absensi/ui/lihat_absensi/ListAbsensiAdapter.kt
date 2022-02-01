@@ -7,18 +7,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.data.model.Absensi
+import com.mohamadrizki.absensi.data.model.AbsensiItem
 
-class ListAbsensiAdapter(private val listAbsensi: ArrayList<Absensi>): RecyclerView.Adapter<ListAbsensiAdapter.ListViewHolder>() {
+class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerView.Adapter<ListAbsensiAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_row_absensi, parent, false)
         return ListViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (tanggal, jamMasuk, jamKeluar) = listAbsensi[position]
+        val tanggal = listAbsensi[position].tanggal
+        val jammasuk = listAbsensi[position].jammasuk
+        val jamkeluar = listAbsensi[position].jamkeluar
         holder.tvTanggal.text = tanggal
-        holder.tvJamMasuk.text = jamMasuk
-        holder.tvJamKeluar.text = jamKeluar
+        holder.tvJamMasuk.text = jammasuk
+        holder.tvJamKeluar.text = jamkeluar
     }
 
     override fun getItemCount(): Int = listAbsensi.size

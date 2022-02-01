@@ -32,7 +32,7 @@ class LoginDataSource {
                 ) {
                     if (response.isSuccessful) {
                         val userResponse = response.body()?.data
-                        val loggedInUser = LoggedInUser(userResponse?.username, userResponse?.nama, true)
+                        val loggedInUser = LoggedInUser(userResponse?.nIP, userResponse?.username, userResponse?.nama, userResponse?.noTlp, userResponse?.jabatan, true)
                         userPreference.setUser(loggedInUser)
                         user.value = loggedInUser
                     }

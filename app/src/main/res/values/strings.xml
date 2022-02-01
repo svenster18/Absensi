@@ -23,7 +23,15 @@
     <string name="tanggal">Tanggal</string>
     <string name="nothing">Tidak Ada</string>
     <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="nip">NIP</string>
+    <string name="no_telp">No Telp</string>
+    <string name="jabatan">Jabatan</string>
     <string name="key_name">name</string>
+    <string name="key_username">username</string>
+    <string name="key_nip">nip</string>
+    <string name="key_jabatan">jabatan</string>
+    <string name="key_no_telp">no_telp</string>
 
     <string-array name="data_tanggal">
         <item>14 Januari 2022</item>

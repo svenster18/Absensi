@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="ui.tambah_absensi.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
         <ImageView
-            android:layout_width="210dp"
-            android:layout_height="280dp"
-            android:layout_margin="16dp"
+            android:id="@+id/photocapture"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="32dp"
             android:contentDescription="@string/foto_pegawai"
-            android:id="@+id/photocapture" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_margin="16dp"/>
+            android:layout_margin="32dp"
+            app:layout_constraintTop_toBottomOf="@id/photocapture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/capture_image"
-            android:id="@+id/btnAmbil"/>
-    </LinearLayout>
+            android:id="@+id/btnAmbil"
+            app:layout_constraintTop_toBottomOf="@id/map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btnKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Absen Masuk"
+            app:layout_constraintTop_toBottomOf="@id/btnAmbil" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
