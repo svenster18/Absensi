@@ -42,8 +42,6 @@ class DashboardFragment : Fragment() {
         })
 
         binding.rvAbsensi.setHasFixedSize(true)
-
-        list.addAll(listAbsensi)
     }
 
     private fun setAbsensiData(absensi: List<AbsensiItem>) {
@@ -56,6 +54,7 @@ class DashboardFragment : Fragment() {
                 showSelectedAbsensi(data)
             }
         })
+        listAbsensiAdapter.notifyDataSetChanged()
     }
 
     private fun showSelectedAbsensi(data: AbsensiItem) {
@@ -68,17 +67,4 @@ class DashboardFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    private val listAbsensi: ArrayList<Absensi>
-        get() {
-            val dataTanggal = resources.getStringArray(R.array.data_tanggal)
-            val dataJamMasuk = resources.getStringArray(R.array.data_jam_masuk)
-            val dataJamKeluar = resources.getStringArray(R.array.data_jam_keluar)
-            val listAbsensi = ArrayList<Absensi>()
-            for (i in dataTanggal.indices) {
-                val absensi = Absensi(dataTanggal[i], dataJamMasuk[i], dataJamKeluar[i])
-                listAbsensi.add(absensi)
-            }
-            return listAbsensi
-        }
 }

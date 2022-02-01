@@ -37,6 +37,8 @@ import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.databinding.FragmentHomeBinding
 import com.mohamadrizki.absensi.ui.lihat_absensi.DashboardViewModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -89,6 +91,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         homeViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             HomeViewModel::class.java)
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val tanggal = sdf.format(Date())
+        binding.tvTanggal.text = "Tanggal : $tanggal"
 
         if (homeViewModel.jam >= 16 && homeViewModel.jam <= 17) {
             binding.btnKirim.text = "Absen Keluar"

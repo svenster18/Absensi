@@ -1,16 +1,24 @@
 package com.mohamadrizki.absensi
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mohamadrizki.absensi.databinding.ActivityMainBinding
+import com.mohamadrizki.absensi.ui.login.LoginActivity
+import com.mohamadrizki.absensi.ui.login.LoginViewModel
+import com.mohamadrizki.absensi.ui.login.LoginViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +39,21 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+            .get(LoginViewModel::class.java)
+        loginViewModel.logout()
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+        return true
     }
 }

@@ -32,46 +32,11 @@
     <string name="key_nip">nip</string>
     <string name="key_jabatan">jabatan</string>
     <string name="key_no_telp">no_telp</string>
-
-    <string-array name="data_tanggal">
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-        <item>14 Januari 2022</item>
-    </string-array>
-
-    <string-array name="data_jam_masuk">
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-        <item>08:00</item>
-    </string-array>
-
-    <string-array name="data_jam_keluar">
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-        <item>16:00</item>
-    </string-array>
+    <string name="logout">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo_growithtech">Logo Growithtech</string>
+    <string name="date">Tanggal :</string>
+    <string name="enter_time">Jam Masuk :</string>
+    <string name="exit_time">Jam Keluar :</string>
 </resources>

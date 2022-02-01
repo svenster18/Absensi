@@ -32,14 +32,30 @@ class DetailAbsensiActivity : AppCompatActivity() {
 
         binding.tvTanggal.text = "Tanggal : ${absensi.tanggal}"
         binding.tvJamMasuk.text = "Jam Masuk : ${absensi.jammasuk}"
-        binding.tvJamKeluar.text = "Jam Masuk : ${absensi.jamkeluar}"
+        binding.tvJamKeluar.text = "Jam Keluar : ${absensi.jamkeluar}"
         Glide.with(this)
             .load("$url${absensi.fotomasuk}")
             .into(binding.photocaptureMasuk)
 
-        Glide.with(this)
-            .load("$url${absensi.fotokeluar}")
-            .into(binding.photocaptureKeluar)
+        if(absensi.fotokeluar != null) {
+            Glide.with(this)
+                .load("$url${absensi.fotokeluar}")
+                .into(binding.photocaptureKeluar)
+
+            val mapKeluarFragment =
+                supportFragmentManager.findFragmentById(R.id.map_keluar) as SupportMapFragment?
+
+            mapKeluarFragment?.getMapAsync {
+                map = it
+
+                map?.addMarker(
+                    MarkerOptions().position(LatLng(absensi.latitudekeluar?.toDouble()!!, absensi.longitudekeluar?.toDouble()!!)).title("Lokasi Pegawai")
+                )
+                map?.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(absensi.latitudekeluar?.toDouble()!!, absensi.longitudekeluar?.toDouble()!!), DEFAULT_ZOOM.toFloat()))
+            }
+        }
 
         val mapMasukFragment =
             supportFragmentManager.findFragmentById(R.id.map_masuk) as SupportMapFragment?
@@ -52,23 +68,8 @@ class DetailAbsensiActivity : AppCompatActivity() {
             )
             map?.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                    LatLng(absensi.latitudemasuk?.toDouble()!!, absensi.longitudemasuk?.toDouble()!!), DetailAbsensiActivity.DEFAULT_ZOOM.toFloat()))
+                    LatLng(absensi.latitudemasuk?.toDouble()!!, absensi.longitudemasuk?.toDouble()!!), DEFAULT_ZOOM.toFloat()))
         }
-
-        val mapKeluarFragment =
-            supportFragmentManager.findFragmentById(R.id.map_masuk) as SupportMapFragment?
-
-        mapKeluarFragment?.getMapAsync {
-            map = it
-
-            map?.addMarker(
-                MarkerOptions().position(LatLng(absensi.latitudekeluar?.toDouble()!!, absensi.longitudekeluar?.toDouble()!!)).title("Lokasi Pegawai")
-            )
-            map?.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(absensi.latitudekeluar?.toDouble()!!, absensi.longitudekeluar?.toDouble()!!), DetailAbsensiActivity.DEFAULT_ZOOM.toFloat()))
-        }
-
     }
 
     companion object {
