@@ -95,15 +95,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val tanggal = sdf.format(Date())
         binding.tvTanggal.text = "Tanggal : $tanggal"
 
-        if (homeViewModel.jam >= 16 && homeViewModel.jam <= 17) {
+        if (homeViewModel.jam in 16..17) {
             binding.btnKirim.text = "Absen Keluar"
-            binding.btnKirim.isEnabled = true
             binding.btnAmbil.isEnabled = true
-
         }
-        else if (homeViewModel.jam >=7 && homeViewModel.jam <=9){
+
+        else if (homeViewModel.jam in 7..9){
             binding.btnKirim.text = "Absen Masuk"
-            binding.btnKirim.isEnabled = true
             binding.btnAmbil.isEnabled = true
         }
 
@@ -140,13 +138,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
             mapFragment?.getMapAsync(this)
 
+            binding.btnKirim.isEnabled = true
         }
 
         binding.btnKirim.setOnClickListener {
-            if (homeViewModel.jam > 16) {
+            if (homeViewModel.jam in 16..17) {
                 homeViewModel.absenKeluar()
             }
-            else {
+            else if (homeViewModel.jam in 7..9) {
                 homeViewModel.absen()
             }
             homeViewModel.toastString.observe(requireActivity(), { toastString ->

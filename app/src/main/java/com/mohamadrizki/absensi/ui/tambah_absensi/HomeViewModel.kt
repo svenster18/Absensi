@@ -21,7 +21,7 @@ import kotlin.time.Duration.Companion.hours
 
 class HomeViewModel : ViewModel() {
 
-    val jam = Date().time.hours.inWholeHours
+    val jam = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
     private val _toastString = MutableLiveData<String>()
     val toastString: LiveData<String> = _toastString
