@@ -5,15 +5,12 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.data.model.AbsensiItem
 import com.mohamadrizki.absensi.databinding.ActivityDetailAbsensiBinding
-import com.mohamadrizki.absensi.databinding.ActivityMainBinding
-import com.mohamadrizki.absensi.ui.tambah_absensi.HomeFragment
 
 class DetailAbsensiActivity : AppCompatActivity() {
 

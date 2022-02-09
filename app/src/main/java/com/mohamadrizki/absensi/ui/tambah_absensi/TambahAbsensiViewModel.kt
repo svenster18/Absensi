@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
-class HomeViewModel : ViewModel() {
+class TambahAbsensiViewModel : ViewModel() {
 
     val jam = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 

@@ -35,26 +35,23 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.UserPreference
-import com.mohamadrizki.absensi.databinding.FragmentHomeBinding
-import com.mohamadrizki.absensi.ui.lihat_absensi.DashboardViewModel
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import com.mohamadrizki.absensi.databinding.FragmentTambahAbsensiBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment(), OnMapReadyCallback {
+class TambahAbsensiFragment : Fragment(), OnMapReadyCallback {
 
     private val userPreference = UserPreference(App.applicationContext())
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentTambahAbsensiBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var tambahAbsensiViewModel: TambahAbsensiViewModel
 
     private lateinit var currentPhotoPath: String
     private var locationPermissionGranted = false
@@ -80,7 +77,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentTambahAbsensiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
@@ -89,30 +86,30 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            HomeViewModel::class.java)
+        tambahAbsensiViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            TambahAbsensiViewModel::class.java)
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val tanggal = sdf.format(Date())
         binding.tvTanggal.text = "Tanggal : $tanggal"
 
-        if (homeViewModel.jam in 16..17) {
+        if (tambahAbsensiViewModel.jam in 16..17) {
             binding.btnKirim.text = "Absen Keluar"
             binding.btnAmbil.isEnabled = true
         }
 
-        else if (homeViewModel.jam in 7..9){
+        else if (tambahAbsensiViewModel.jam in 7..9){
             binding.btnKirim.text = "Absen Masuk"
             binding.btnAmbil.isEnabled = true
         }
 
-        lastLocation = homeViewModel.getLatLng()
+        lastLocation = tambahAbsensiViewModel.getLatLng()
 
-        currentPhotoPath = homeViewModel.getCurrentPhotoPath()
+        currentPhotoPath = tambahAbsensiViewModel.getCurrentPhotoPath()
 
         //if (!currentPhotoPath.equals("")) {
         //    setPic()
         //}
-        photoFile = homeViewModel.getPhoto()
+        photoFile = tambahAbsensiViewModel.getPhoto()
 
 
         // Construct a PlacesClient
@@ -142,13 +139,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.btnKirim.setOnClickListener {
-            if (homeViewModel.jam in 16..17) {
-                homeViewModel.absenKeluar()
+            if (tambahAbsensiViewModel.jam in 16..17) {
+                tambahAbsensiViewModel.absenKeluar()
             }
-            else if (homeViewModel.jam in 7..9) {
-                homeViewModel.absen()
+            else if (tambahAbsensiViewModel.jam in 7..9) {
+                tambahAbsensiViewModel.absen()
             }
-            homeViewModel.toastString.observe(requireActivity(), { toastString ->
+            tambahAbsensiViewModel.toastString.observe(requireActivity(), { toastString ->
                 Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
             })
         }
@@ -157,7 +154,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
-            photoFile = homeViewModel.getPhoto()
+            photoFile = tambahAbsensiViewModel.getPhoto()
             setPic()
         }
     }
@@ -216,7 +213,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     context?.grantUriPermission(activity?.packageName, photoURI, flags)
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
-                homeViewModel.setPhoto(photoFile!!)
+                tambahAbsensiViewModel.setPhoto(photoFile!!)
             }
         }
     }
@@ -235,7 +232,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
-            homeViewModel.setCurrentPhotoPath(currentPhotoPath)
+            tambahAbsensiViewModel.setCurrentPhotoPath(currentPhotoPath)
         }
     }
 
@@ -320,8 +317,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            homeViewModel.setLatLng(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
-                            lastLocation = homeViewModel.getLatLng()
+                            tambahAbsensiViewModel.setLatLng(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
+                            lastLocation = tambahAbsensiViewModel.getLatLng()
                             map?.addMarker(
                                 MarkerOptions().position(lastLocation!!).title("Lokasi Pegawai")
                             )
