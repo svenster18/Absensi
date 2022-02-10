@@ -36,6 +36,7 @@ import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.R
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.databinding.FragmentTambahAbsensiBinding
+import com.mohamadrizki.absensi.ui.lihat_absensi.DetailAbsensiActivity
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -88,18 +89,13 @@ class TambahAbsensiFragment : Fragment(), OnMapReadyCallback {
 
         tambahAbsensiViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             TambahAbsensiViewModel::class.java)
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        val tanggal = sdf.format(Date())
-        binding.tvTanggal.text = "Tanggal : $tanggal"
 
-        if (tambahAbsensiViewModel.jam in 16..17) {
+        if (tambahAbsensiViewModel.jam in 16..22) {
             binding.btnKirim.text = "Absen Keluar"
-            binding.btnAmbil.isEnabled = true
         }
 
-        else if (tambahAbsensiViewModel.jam in 7..9){
+        else if (tambahAbsensiViewModel.jam in 7..16){
             binding.btnKirim.text = "Absen Masuk"
-            binding.btnAmbil.isEnabled = true
         }
 
         lastLocation = tambahAbsensiViewModel.getLatLng()
@@ -138,16 +134,22 @@ class TambahAbsensiFragment : Fragment(), OnMapReadyCallback {
             binding.btnKirim.isEnabled = true
         }
 
+        tambahAbsensiViewModel.toastString.observe(requireActivity()) { toastString ->
+            Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
+        }
+
         binding.btnKirim.setOnClickListener {
-            if (tambahAbsensiViewModel.jam in 16..17) {
+            if (tambahAbsensiViewModel.jam in 17..21) {
                 tambahAbsensiViewModel.absenKeluar()
             }
-            else if (tambahAbsensiViewModel.jam in 7..9) {
+            else if (tambahAbsensiViewModel.jam in 6..16) {
                 tambahAbsensiViewModel.absen()
             }
-            tambahAbsensiViewModel.toastString.observe(requireActivity(), { toastString ->
-                Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
-            })
+            tambahAbsensiViewModel.absensi.observe(requireActivity()) { absensi ->
+                val intent = Intent(context, DetailAbsensiActivity::class.java)
+                intent.putExtra(DetailAbsensiActivity.EXTRA_ABSENSI, absensi)
+                startActivity(intent)
+            }
         }
     }
 

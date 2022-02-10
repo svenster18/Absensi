@@ -1,6 +1,7 @@
 package com.mohamadrizki.absensi.ui.lihat_absensi
 
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,10 @@ class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerVi
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val tanggal = listAbsensi[position].tanggal
         val jammasuk = listAbsensi[position].jammasuk
+        if (jammasuk?.substring(0,2)?.toInt()!! > 8) {
+            holder.tvStatus.text = "Terlambat"
+            holder.tvStatus.setTextColor(Color.RED)
+        }
         val jamkeluar = listAbsensi[position].jamkeluar
         holder.tvTanggal.text = tanggal
         holder.tvJamMasuk.text = jammasuk
@@ -37,6 +42,7 @@ class ListAbsensiAdapter(private val listAbsensi: List<AbsensiItem>): RecyclerVi
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvTanggal: TextView = itemView.findViewById(R.id.tv_item_tanggal)
+        var tvStatus: TextView = itemView.findViewById(R.id.tv_status)
         var tvJamMasuk: TextView = itemView.findViewById(R.id.tv_item_jam_masuk)
         var tvJamKeluar: TextView = itemView.findViewById(R.id.tv_item_jam_keluar)
     }

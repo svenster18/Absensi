@@ -73,7 +73,7 @@ class PreferenceFragment : PreferenceFragmentCompat(),
             noTelpPreference.summary = sharedPreferences.getString(NO_TELP, DEFAULT_VALUE)
             val user = userPreference.getUser()
             val noTelp = sharedPreferences.getString(NO_TELP, DEFAULT_VALUE)
-            userPreference.setUser(LoggedInUser(user.nip, user.username, user.displayName, noTelp, user.jabatan, user.isLoggedIn))
+            userPreference.setUser(LoggedInUser(user.nip, user.username, user.displayName, noTelp, user.jabatan, user.gaji, user.isLoggedIn))
         }
     }
 }

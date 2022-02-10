@@ -36,5 +36,8 @@ data class Data(
 	val jabatan: String? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	val username: String? = null,
+
+	@field:SerializedName("Gaji")
+	val gaji: String? = null
 ) : Parcelable

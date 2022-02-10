@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.lihat_absensi.DashboardFragment">
+
+    <TextView
+        android:id="@+id/tv_absence_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/absence_list"
+        android:textSize="36sp"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_absensi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_absence_list"
         tools:listitem="@layout/item_row_absensi"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

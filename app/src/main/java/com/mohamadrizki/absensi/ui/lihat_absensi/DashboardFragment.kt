@@ -20,7 +20,6 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val list = ArrayList<Absensi>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

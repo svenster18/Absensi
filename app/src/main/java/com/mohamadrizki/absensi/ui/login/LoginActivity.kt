@@ -35,8 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
         val isLoggedin = loginViewModel.isLoggedin
 
@@ -68,8 +67,8 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                loginResult.success.observe(this@LoginActivity, Observer {
-                    updateUiWithUser(it)
+                loginResult.success.observe(this@LoginActivity, Observer { user ->
+                    updateUiWithUser(user)
                 })
             }
             setResult(Activity.RESULT_OK)
@@ -121,6 +120,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+
         startActivity(intent)
     }
 

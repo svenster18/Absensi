@@ -11,6 +11,7 @@ class UserPreference(context: Context) {
         private const val JABATAN = "jabatan"
         private const val NO_TELP = "no_telp"
         private const val USER_ID = "user_id"
+        private const val GAJI = "gaji"
         private const val IS_LOGGED_IN = "is_logged_in"
     }
 
@@ -23,6 +24,7 @@ class UserPreference(context: Context) {
         editor.putString(JABATAN, value.jabatan)
         editor.putString(NO_TELP, value.no_telp)
         editor.putString(USER_ID, value.username)
+        editor.putString(GAJI, value.gaji)
         editor.putBoolean(IS_LOGGED_IN, value.isLoggedIn)
         editor.apply()
     }
@@ -34,6 +36,7 @@ class UserPreference(context: Context) {
         user.displayName = preferences.getString(NAME, "")
         user.jabatan = preferences.getString(JABATAN, "")
         user.no_telp = preferences.getString(NO_TELP, "")
+        user.gaji = preferences.getString(GAJI, "")
         user.isLoggedIn = preferences.getBoolean(IS_LOGGED_IN, false)
 
         return user

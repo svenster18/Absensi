@@ -20,11 +20,19 @@
 
         <TextView
             android:id="@+id/tv_item_tanggal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12 Desember 2021"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/quantum_googgreen"
+            android:text="Tepat Waktu"
+            card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
@@ -46,8 +54,8 @@
             android:textSize="16sp"
             android:ellipsize="end"
             android:text="@string/jam_keluar"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_item_tanggal"
-            card_view:layout_constraintEnd_toEndOf="@id/tv_item_tanggal"/>
+            card_view:layout_constraintTop_toBottomOf="@id/tv_status"
+            card_view:layout_constraintEnd_toEndOf="@id/tv_status"/>
 
         <TextView
             android:id="@+id/tv_item_jam_masuk"

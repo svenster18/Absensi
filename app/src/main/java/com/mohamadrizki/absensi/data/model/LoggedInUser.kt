@@ -13,5 +13,6 @@ data class LoggedInUser(
     var displayName: String? = null,
     var no_telp: String? = null,
     var jabatan: String? = null,
+    var gaji: String? = null,
     var isLoggedIn: Boolean = false
 ) : Parcelable
