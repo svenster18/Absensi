@@ -87,6 +87,29 @@ class TambahAbsensiFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        try {
+            if (locationPermissionGranted) {
+                binding.btnAmbil.isEnabled = true
+            } else {
+                lastKnownLocation = null
+                binding.btnAmbil.isEnabled = false
+                getLocationPermission()
+            }
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message, e)
+        }
+
+        when (PackageManager.PERMISSION_DENIED) {
+            ContextCompat.checkSelfPermission(App.applicationContext(), Manifest.permission.CAMERA)
+            -> {
+                binding.btnAmbil.isEnabled = false
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_IMAGE_CAPTURE
+                )
+            }
+            else -> binding.btnAmbil.isEnabled = true
+        }
+
         tambahAbsensiViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             TambahAbsensiViewModel::class.java)
 
@@ -135,20 +158,35 @@ class TambahAbsensiFragment : Fragment(), OnMapReadyCallback {
         }
 
         tambahAbsensiViewModel.toastString.observe(requireActivity()) { toastString ->
-            Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
+            if (toastString != null) {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        tambahAbsensiViewModel.sukses.observe(requireActivity()) { sukses ->
+            Log.d("Sukses", sukses.toString())
+            if (sukses) {
+                tambahAbsensiViewModel.findAbsensi()
+            }
+        }
+
+        tambahAbsensiViewModel.absensi.observe(requireActivity()) { absensi ->
+            if (absensi != null) {
+                val intent = Intent(context, DetailAbsensiActivity::class.java)
+                intent.putExtra(DetailAbsensiActivity.EXTRA_ABSENSI, absensi)
+                startActivity(intent)
+            }
         }
 
         binding.btnKirim.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             if (tambahAbsensiViewModel.jam in 17..21) {
                 tambahAbsensiViewModel.absenKeluar()
             }
             else if (tambahAbsensiViewModel.jam in 6..16) {
                 tambahAbsensiViewModel.absen()
-            }
-            tambahAbsensiViewModel.absensi.observe(requireActivity()) { absensi ->
-                val intent = Intent(context, DetailAbsensiActivity::class.java)
-                intent.putExtra(DetailAbsensiActivity.EXTRA_ABSENSI, absensi)
-                startActivity(intent)
             }
         }
     }

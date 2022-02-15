@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.mohamadrizki.absensi.App
 import com.mohamadrizki.absensi.UserPreference
 import com.mohamadrizki.absensi.data.ApiConfig
-import com.mohamadrizki.absensi.data.model.Absensi
 import com.mohamadrizki.absensi.data.model.AbsensiItem
 import com.mohamadrizki.absensi.data.model.AbsensiResponse
 import retrofit2.Call

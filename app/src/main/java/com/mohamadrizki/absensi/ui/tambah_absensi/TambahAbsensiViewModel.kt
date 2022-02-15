@@ -27,6 +27,9 @@ class TambahAbsensiViewModel : ViewModel() {
 
     val jam = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
+    private val _sukses = MutableLiveData<Boolean>()
+    val sukses: LiveData<Boolean> = _sukses
+
     private val _absensi = MutableLiveData<AbsensiItem>()
     val absensi: LiveData<AbsensiItem> = _absensi
 
@@ -40,6 +43,10 @@ class TambahAbsensiViewModel : ViewModel() {
     private var location: LatLng? = null
     private var photoFile: File? = null
     private var currentPhotoPath = ""
+
+    init {
+        _sukses.value = false
+    }
 
     fun setLatLng(location: LatLng) {
         this.location = location
@@ -74,7 +81,8 @@ class TambahAbsensiViewModel : ViewModel() {
                 response: Response<PostAbsensiResponse>
             ) {
                 if (response.isSuccessful) {
-                    _toastString.value = response.body()?.messages?.success!!
+                    _toastString.value = "Absen Berhasil"
+                    _sukses.value = true
                 }
                 else {
                     _toastString.value = "Sudah Absen"
@@ -105,7 +113,8 @@ class TambahAbsensiViewModel : ViewModel() {
                 response: Response<PostAbsensiResponse>
             ) {
                 if (response.isSuccessful) {
-                    _toastString.value = response.body()?.messages?.success!!
+                    _toastString.value = "Absen Berhasil"
+                    _sukses.value = true
                 }
                 else {
                     _toastString.value = "Sudah Absen"
@@ -119,7 +128,7 @@ class TambahAbsensiViewModel : ViewModel() {
         })
     }
 
-    private fun findListAbsensi() {
+    fun findAbsensi() {
         val client = ApiConfig.getApiService().getAbsensi(nip)
         client.enqueue(object: Callback<AbsensiResponse> {
             override fun onResponse(

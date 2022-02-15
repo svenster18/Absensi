@@ -43,6 +43,7 @@ class LihatGajiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar.visibility = View.VISIBLE
         tampilGaji()
     }
 
@@ -80,6 +81,7 @@ class LihatGajiFragment : Fragment() {
                         binding.tvTunjanganMakan.text = "Tunjangan Makan    : Rp ${String.format("%.2f", tunjanganMakan)}"
                         binding.tvTunjanganLembur.text = "Tunjangan Lembur   : Rp ${String.format("%.2f", tunjanganLembur)}"
                         binding.tvTotalGaji.text = "Total Gaji                    : Rp ${String.format("%.2f", totalGaji)}"
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
                 else {
